@@ -2,7 +2,7 @@ import 'package:flutter/material.dart' hide Action;
 import 'package:provider/provider.dart';
 import 'package:vsem_edu/home/stats_view.dart';
 import 'package:vsem_edu/home/todo_list_model.dart';
-import 'filter_button.dart';
+import 'main_view.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen();
@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   // Because the state of the tabs is only a concern to the HomeScreen Widget,
   // it is stored as local state rather than in the TodoListModel.
-  final _tab = ValueNotifier(_HomeScreenTab.todos);
+  final _tab = ValueNotifier(_HomeScreenTab.main);
 
   @override
   void dispose() {
@@ -28,12 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text("App name"),
         actions: <Widget>[
-          ValueListenableBuilder<_HomeScreenTab>(
+          /*ValueListenableBuilder<_HomeScreenTab>(
             valueListenable: _tab,
             builder: (_, tab, __) => FilterButton(
               isActive: tab == _HomeScreenTab.todos,
             ),
-          ),
+          ),*/
         ],
       ),
       body: Selector<MainModel, bool>(
@@ -51,9 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
             valueListenable: _tab,
             builder: (context, tab, _) {
               switch (tab) {
+                case _HomeScreenTab.main:
+                  return const MainView();
                 case _HomeScreenTab.stats:
-                  return const StatsView();
-                case _HomeScreenTab.todos:
                 default: return const StatsView();
               }
             },
@@ -104,4 +104,4 @@ class _HomeScreenState extends State<HomeScreen> {
   }*/
 }
 
-enum _HomeScreenTab { todos, stats }
+enum _HomeScreenTab { main, stats }

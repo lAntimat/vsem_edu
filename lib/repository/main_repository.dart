@@ -1,17 +1,30 @@
-
 import 'dart:async';
+import 'dart:convert';
 import 'dart:core';
 
+import 'package:dio/dio.dart';
+import 'package:vsem_edu/home/ImageCarousel.dart';
 import 'package:vsem_edu/home/home_models.dart';
+import 'package:vsem_edu/network/web_service.dart';
 
 class MainRepository {
 
-  Future<List<CuisineListItem>> loadCuisine() {
-    return Future.value(List<CuisineListItem>(1));
+  final WebService webService;
+
+  MainRepository(this.webService);
+
+  Future<List<CuisineListItem>> loadCuisine() async {
+    return webService.getCuisines().then((value) {
+      var data = Cuisine.fromJson(jsonDecode(value.body));
+      return Future.value(data.details.list);
+    });
   }
 
-  // Persists todos to local disk and the web
-  Future saveTodos(List<Null> todos) {
-    return null;
+  Future<List<dynamic>> loadCarouselItems() async {
+    return webService.getCarousel().then((value) {
+      var data = ImageCarouselParent.fromJson(jsonDecode(value.body));
+      return Future.value(data.urls);
+    });
   }
+
 }

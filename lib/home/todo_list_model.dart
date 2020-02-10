@@ -10,40 +10,31 @@ import 'package:meta/meta.dart';
 import 'package:vsem_edu/home/home_models.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
 
-enum VisibilityFilter { all, active, completed }
-
 class MainModel extends ChangeNotifier {
   final MainRepository repository;
 
-  VisibilityFilter _filter;
+  List<CuisineListItem> _cuisines = List();
+  List<dynamic> _carousel = List();
 
-  VisibilityFilter get filter => _filter;
+  UnmodifiableListView<CuisineListItem> get cuisines =>
+      UnmodifiableListView(_cuisines);
 
-  set filter(VisibilityFilter filter) {
-    _filter = filter;
-    notifyListeners();
-  }
-
-  List<CuisineListItem> _cuisines;
-
-  UnmodifiableListView<CuisineListItem> get cuisines => UnmodifiableListView(_cuisines);
+  UnmodifiableListView<dynamic> get carousel => UnmodifiableListView(_carousel);
 
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
   MainModel({
-    @required this.repository,
-    VisibilityFilter filter,
-    List<CuisineListItem> cuisines,
-  })  : _cuisines = cuisines ?? [],
-        _filter = filter ?? VisibilityFilter.all;
+    @required this.repository
+  });
 
   @override
   void addListener(VoidCallback listener) {
     super.addListener(listener);
     // update data for every subscriber, especially for the first one
     loadCuisines();
+    loadCarousel();
   }
 
   Future loadCuisines() {
@@ -52,6 +43,20 @@ class MainModel extends ChangeNotifier {
 
     return repository.loadCuisine().then((loadedTodos) {
       _cuisines.addAll(loadedTodos);
+      _isLoading = false;
+      notifyListeners();
+    }).catchError((err) {
+      _isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  Future loadCarousel() {
+    _isLoading = true;
+    notifyListeners();
+
+    return repository.loadCarouselItems().then((loadedTodos) {
+      _carousel.addAll(loadedTodos);
       _isLoading = false;
       notifyListeners();
     }).catchError((err) {
