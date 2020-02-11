@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:provider/provider.dart';
+import 'package:vsem_edu/common/app_colors.dart';
 import 'package:vsem_edu/home/stats_view.dart';
 import 'package:vsem_edu/home/todo_list_model.dart';
+
 import 'main_view.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -54,7 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 case _HomeScreenTab.main:
                   return const MainView();
                 case _HomeScreenTab.stats:
-                default: return const StatsView();
+                default:
+                  return const StatsView();
               }
             },
           );
@@ -63,27 +66,41 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: ValueListenableBuilder<_HomeScreenTab>(
         valueListenable: _tab,
         builder: (context, tab, _) {
-          return BottomNavigationBar(
+          return BottomAppBar(
             key: Key('__tabs__'),
-            currentIndex: _HomeScreenTab.values.indexOf(tab),
-            onTap: (int index) => _tab.value = _HomeScreenTab.values[index],
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.list),
-                title: Text("Один"),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.show_chart),
-                title: Text("Два"),
-              ),
-            ],
+            child: new Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.supervised_user_circle),
+                  color: Colors.white,
+                  onPressed: () {
+                    _tab.value = _HomeScreenTab.values[0];
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.volume_mute),
+                  color: Colors.white,
+                  onPressed: () {
+                    _tab.value = _HomeScreenTab.values[1];
+                  },
+                ),
+              ],
+            ),
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+          elevation: 4.0,
+          child: const Icon(Icons.shopping_basket, color: AppColors.white,),
+          backgroundColor: AppColors.blackBg,
+          onPressed: () {}),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
-  /*void _showUndoSnackbar(BuildContext context, Todo todo) {
+/*void _showUndoSnackbar(BuildContext context, Todo todo) {
     Scaffold.of(context).showSnackBar(
       SnackBar(
         key: ArchSampleKeys.snackbar,

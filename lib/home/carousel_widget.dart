@@ -66,7 +66,7 @@ class CarouselWidget {
         autoPlay: true,
         autoPlayAnimationDuration: const Duration(seconds: 2),
         autoPlayInterval: const Duration(seconds: 8),
-        viewportFraction: 0.8,
+        viewportFraction: 1.0,
         aspectRatio: 2.0,
     );
   }

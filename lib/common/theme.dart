@@ -3,6 +3,7 @@
 // in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:vsem_edu/common/app_colors.dart';
 
 class AppTheme {
   static ThemeData get theme {
@@ -26,6 +27,8 @@ class AppTheme {
       ),
       textTheme: textTheme.copyWith(
         body1: body1,
+        title: TextStyle(fontSize: 24, color: AppColors.blackText),
+        subtitle: TextStyle(fontSize: 18, color: AppColors.blackText),
       ),
     );
   }
