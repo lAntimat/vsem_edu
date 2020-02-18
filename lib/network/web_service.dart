@@ -6,7 +6,6 @@ import 'package:vsem_edu/network/webservice_response.dart';
 
 import '../globals.dart';
 
-
 enum HttpRequest { Get, Post, Head, Update, PostFormData }
 
 const int DefaultTimeoutInSeconds = 30;
@@ -27,7 +26,7 @@ class WebService {
   Map<String, String> _defaultParams = {
     "device_id": "deviceId",
     "device_platform": "mobile",
-    "device_uiid" : Uuid().generateV4(),
+    "device_uiid": Uuid().generateV4(),
     "api_key": "apikeydeliverycube",
     "lang": "ru"
   };
@@ -40,6 +39,7 @@ class WebService {
   // NOTE: Add or remove endpoints required
   String _getCuisinesEndpoint = "api/cuisineList";
   String _getSettingsEndpoint = "api/getSettings";
+  String _getMerchantsEndpoint = "api/searchMerchant";
 
   void initClient() {
     _dio = new Dio(); // with default Options
@@ -64,18 +64,29 @@ class WebService {
   }
 
   Future<WebServiceResponse> getCuisines() async {
-    var response = await _dio.get(
-      _apiEndpoint + _getCuisinesEndpoint,
-      queryParameters: _defaultParams
-    );
+    var response = await _dio.get(_apiEndpoint + _getCuisinesEndpoint,
+        queryParameters: _defaultParams);
     return WebServiceResponse.fromDioResponse(response);
   }
 
   Future<WebServiceResponse> getCarousel() async {
-    var response = await _dio.get(
-        _apiEndpoint + _getSettingsEndpoint,
-        queryParameters: _defaultParams
-    );
+    var response = await _dio.get(_apiEndpoint + _getSettingsEndpoint,
+        queryParameters: _defaultParams);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getMerchants() async {
+    Map<String, String> params = Map.from(_defaultParams);
+    params.addAll(
+        {
+          "user_token": Globals.getInstance().token,
+          "lat": "55.833511",
+          "lng": "49.069439",
+          "search_type": "byLatLong"
+        });
+
+    var response = await _dio.get(_apiEndpoint + _getMerchantsEndpoint,
+        queryParameters: params);
     return WebServiceResponse.fromDioResponse(response);
   }
 }

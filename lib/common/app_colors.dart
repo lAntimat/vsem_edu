@@ -11,4 +11,6 @@ class AppColors {
   static const Color buttonRed = Color(0xFFDA3901);
   static const Color cardBg = Colors.white;
   static const Color white = Colors.white;
+  static const Color startFilledColor = Color(0xFFe25100);
+  static const Color startColor = Color(0xFF808080);
 }

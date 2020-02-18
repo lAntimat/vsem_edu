@@ -120,3 +120,28 @@ class Get {
     return data;
   }
 }
+
+class CafeListItem  {
+  String id;
+  String name;
+  String featuredImage;
+  String totalMerchant;
+
+  CafeListItem({this.id, this.name, this.featuredImage, this.totalMerchant});
+
+  CafeListItem.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    featuredImage = json['featured_image'];
+    totalMerchant = json['total_merchant'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['featured_image'] = this.featuredImage;
+    data['total_merchant'] = this.totalMerchant;
+    return data;
+  }
+}

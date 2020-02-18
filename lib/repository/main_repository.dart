@@ -2,13 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:dio/dio.dart';
 import 'package:vsem_edu/home/ImageCarousel.dart';
 import 'package:vsem_edu/home/home_models.dart';
+import 'package:vsem_edu/home/merchant_models.dart';
 import 'package:vsem_edu/network/web_service.dart';
 
 class MainRepository {
-
   final WebService webService;
 
   MainRepository(this.webService);
@@ -27,4 +26,10 @@ class MainRepository {
     });
   }
 
+  Future<List<MerchantDetail>> loadCafesItems() async {
+    return webService.getMerchants().then((value) {
+      var data = ResponseMerchant.fromJson(jsonDecode(value.body));
+      return Future.value(data.details.list);
+    });
+  }
 }

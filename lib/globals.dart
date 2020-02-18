@@ -33,7 +33,7 @@ class Globals {
 
   Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString(tokenKey) ?? "";
+    token = prefs.getString(tokenKey) ?? "rhpnff7t7mg7f5l0bc940fb12eb3602fefdde66cdf14819";
     return token;
   }
 
