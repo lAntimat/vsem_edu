@@ -157,16 +157,34 @@ class MainView extends StatelessWidget {
   }
 
   Widget _buildCafePages() {
-    return Container(
-      height: 200,
-      child: Selector<MainModel, UnmodifiableListView<MerchantDetail>>(
-          selector: (context, model) => model.cafes,
-          builder: (context, itemsList, _) => PageView.builder(
-                itemBuilder: (context, position) {
-                  return _buildCafeList(context, itemsList, position + 1);
-                },
-                itemCount: itemsList.length ~/ 3 + 1, // Can be null
-              )),
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8, bottom: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text("Лента ресторанов и кафе", style: TextStyle(color: AppColors.blackText, fontSize: 18.0),),
+              Container(
+                padding: EdgeInsets.all(4),
+                color: AppColors.btnBg1,
+                child: Text("Все рестораны"),
+              )
+            ],
+          ),
+        ),
+        Container(
+          height: 200,
+          child: Selector<MainModel, UnmodifiableListView<MerchantDetail>>(
+              selector: (context, model) => model.cafes,
+              builder: (context, itemsList, _) => PageView.builder(
+                    itemBuilder: (context, position) {
+                      return _buildCafeList(context, itemsList, position + 1);
+                    },
+                    itemCount: itemsList.length ~/ 3 + 1, // Can be null
+                  )),
+        ),
+      ],
     );
   }
 
@@ -238,8 +256,10 @@ class MainView extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "( ${item.rating.reviewCount} )",
-                      style:
-                          TextStyle(fontSize: 10, color: AppColors.blackText,),
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: AppColors.blackText,
+                      ),
                       overflow: TextOverflow.clip,
                       textAlign: TextAlign.center,
                     ),

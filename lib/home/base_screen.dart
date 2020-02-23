@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:provider/provider.dart';
 import 'package:vsem_edu/common/app_colors.dart';
-import 'package:vsem_edu/home/stats_view.dart';
+import 'package:vsem_edu/common/navigation_drawer.dart';
+import 'package:vsem_edu/common/routes.dart';
+import 'package:vsem_edu/home/main_view.dart';
 import 'package:vsem_edu/home/todo_list_model.dart';
 
-import 'main_view.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen();
+class BaseScreen extends StatefulWidget {
+
+  final Widget child;
+
+  const BaseScreen(this.child);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _BaseScreenState createState() => _BaseScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _BaseScreenState extends State<BaseScreen> {
   // Because the state of the tabs is only a concern to the HomeScreen Widget,
   // it is stored as local state rather than in the TodoListModel.
   final _tab = ValueNotifier(_HomeScreenTab.main);
@@ -28,7 +32,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("App name"),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("Ваш адрес", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+            Row(
+              children: <Widget>[
+                Text("г. Москва, Восточный район, ул. Ленина", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+                Icon(Icons.arrow_drop_down)
+              ],
+            )
+          ],
+        ),
         actions: <Widget>[
           /*ValueListenableBuilder<_HomeScreenTab>(
             valueListenable: _tab,
@@ -49,18 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
 
-          return ValueListenableBuilder<_HomeScreenTab>(
-            valueListenable: _tab,
-            builder: (context, tab, _) {
-              switch (tab) {
-                case _HomeScreenTab.main:
-                  return const MainView();
-                case _HomeScreenTab.stats:
-                default:
-                  return const StatsView();
-              }
-            },
-          );
+          return widget.child;
         },
       ),
       bottomNavigationBar: ValueListenableBuilder<_HomeScreenTab>(
@@ -83,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   icon: Icon(Icons.volume_mute),
                   color: Colors.white,
                   onPressed: () {
-                    _tab.value = _HomeScreenTab.values[1];
+                   Navigator.pushNamed(context, AppRoutes.merchantDetail);
                   },
                 ),
               ],
@@ -93,10 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
           elevation: 4.0,
-          child: const Icon(Icons.shopping_basket, color: AppColors.white,),
+          child: const Icon(
+            Icons.shopping_basket,
+            color: AppColors.white,
+          ),
           backgroundColor: AppColors.blackBg,
           onPressed: () {}),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      drawer: NavigationDrawer(),
     );
   }
 
