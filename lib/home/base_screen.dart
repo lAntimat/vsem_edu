@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:vsem_edu/common/app_colors.dart';
 import 'package:vsem_edu/common/navigation_drawer.dart';
 import 'package:vsem_edu/common/routes.dart';
-import 'package:vsem_edu/home/main_view.dart';
-import 'package:vsem_edu/home/todo_list_model.dart';
+
+import 'main_model.dart';
 
 
 class BaseScreen extends StatefulWidget {

@@ -9,7 +9,7 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:vsem_edu/common/app_colors.dart';
 import 'package:vsem_edu/common/theme.dart';
 import 'package:vsem_edu/home/carousel_widget.dart';
-import 'package:vsem_edu/home/todo_list_model.dart';
+import 'package:vsem_edu/home/main_model.dart';
 
 import 'home_models.dart';
 import 'merchant_models.dart';
@@ -153,18 +153,27 @@ class MainView extends StatelessWidget {
   Widget _buildCarouselSelector() {
     return Selector<MainModel, UnmodifiableListView<dynamic>>(
         selector: (context, model) => model.carousel,
-        builder: (context, itemsList, _) => CarouselWidget(itemsList).build());
+        builder: (context, itemsList, _) => itemsList.length > 0
+            ? CarouselWidget(itemsList).build()
+            : Container(height: 200, child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CircularProgressIndicator(),
+            )));
   }
 
   Widget _buildCafePages() {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 8, bottom: 8),
+          padding:
+              const EdgeInsets.only(left: 16.0, right: 16.0, top: 8, bottom: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("Лента ресторанов и кафе", style: TextStyle(color: AppColors.blackText, fontSize: 18.0),),
+              Text(
+                "Лента ресторанов и кафе",
+                style: TextStyle(color: AppColors.blackText, fontSize: 18.0),
+              ),
               Container(
                 padding: EdgeInsets.all(4),
                 color: AppColors.btnBg1,

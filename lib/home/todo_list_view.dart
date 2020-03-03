@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vsem_edu/home/home_models.dart';
-import 'package:vsem_edu/home/todo_list_model.dart';
+
+import 'main_model.dart';
 
 class TodoListView extends StatelessWidget {
   final void Function(BuildContext context, CuisineListItem todo) onRemove;
