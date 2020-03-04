@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vsem_edu/common/routes.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -17,7 +18,8 @@ class NavigationDrawer extends StatelessWidget {
           ListTile(
             title: Text('Вход / Регистрация'),
             onTap: () {
-              Navigator.pop(context);
+              Navigator.pushNamed(context, AppRoutes.login);
+              //Navigator.pop(context);
             },
           ),
           ListTile(

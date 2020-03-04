@@ -16,7 +16,7 @@ Widget simpleFilledButton(
     textColor: Colors.white,
     color: color,
     padding:
-        EdgeInsetsDirectional.only(start: 6, end: 6, top: 6, bottom: 6),
+        EdgeInsetsDirectional.only(start: 10, end: 10, top: 10, bottom: 10),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
   );
 }
@@ -53,8 +53,9 @@ Widget buttonTransparentBg(String text, {@required VoidCallback onPressed}) {
     ),
     textColor: Colors.white,
     borderSide: BorderSide(color: Colors.transparent),
+    highlightedBorderColor: Colors.transparent,
     padding:
-        EdgeInsetsDirectional.only(start: 10, end: 10, top: 20, bottom: 20),
+        EdgeInsetsDirectional.only(start: 10, end: 10, top: 10, bottom: 10),
   );
 }
 

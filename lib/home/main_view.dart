@@ -21,10 +21,7 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.background,
-      child: Selector<MainModel, bool>(
-        selector: (context, model) => model.isLoading,
-        builder: (context, isLoading, _) => !isLoading
-            ? Container(
+      child: Container(
                 height: double.infinity,
                 child: SingleChildScrollView(
                   child: Column(
@@ -37,11 +34,6 @@ class MainView extends StatelessWidget {
                   ),
                 ),
               )
-            : Container(
-                height: double.infinity,
-                child: Center(child: CircularProgressIndicator()),
-              ),
-      ),
     );
   }
 
@@ -151,10 +143,9 @@ class MainView extends StatelessWidget {
   }
 
   Widget _buildCarouselSelector() {
-    return Selector<MainModel, UnmodifiableListView<dynamic>>(
-        selector: (context, model) => model.carousel,
-        builder: (context, itemsList, _) => itemsList.length > 0
-            ? CarouselWidget(itemsList).build()
+    return Consumer<MainModel>(
+        builder: (context, model, _) => model.carousel.length > 0
+            ? CarouselWidget(model.carousel).build()
             : Container(height: 200, child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: CircularProgressIndicator(),
@@ -184,13 +175,12 @@ class MainView extends StatelessWidget {
         ),
         Container(
           height: 200,
-          child: Selector<MainModel, UnmodifiableListView<MerchantDetail>>(
-              selector: (context, model) => model.cafes,
-              builder: (context, itemsList, _) => PageView.builder(
+          child: Consumer<MainModel>(
+              builder: (context, model, _) => PageView.builder(
                     itemBuilder: (context, position) {
-                      return _buildCafeList(context, itemsList, position + 1);
+                      return _buildCafeList(context, model.cafes, position + 1);
                     },
-                    itemCount: itemsList.length ~/ 3 + 1, // Can be null
+                    itemCount: model.cafes.length ~/ 3 + 1, // Can be null
                   )),
         ),
       ],
