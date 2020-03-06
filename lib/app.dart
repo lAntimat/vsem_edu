@@ -5,29 +5,32 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
-import 'package:provider/provider.dart';
-import 'package:vsem_edu/basket/basket_screen.dart';
-import 'package:vsem_edu/basket/basket_view.dart';
-import 'package:vsem_edu/basket/basket_view_model.dart';
 import 'package:vsem_edu/common/routes.dart';
 import 'package:vsem_edu/common/theme.dart';
-import 'package:vsem_edu/home/base_screen.dart';
-import 'package:vsem_edu/home/main_view.dart';
-import 'package:vsem_edu/login/login_screen.dart';
-import 'package:vsem_edu/login/login_view.dart';
-import 'package:vsem_edu/login/register_screen.dart';
-import 'package:vsem_edu/login/register_view.dart';
-import 'package:vsem_edu/login/register_view_model.dart';
-import 'package:vsem_edu/merchantDetail/merchant_detail_model.dart';
-import 'package:vsem_edu/login/login_view_model.dart';
-import 'package:vsem_edu/merchantDetail/merchant_view.dart';
+import 'package:vsem_edu/globals.dart';
 import 'package:vsem_edu/network/web_service.dart';
-import 'package:vsem_edu/profile/profile_screen.dart';
-import 'package:vsem_edu/profile/profile_view.dart';
-import 'package:vsem_edu/profile/profile_view_model.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
+import 'package:vsem_edu/ui/basket/basket_screen.dart';
+import 'package:vsem_edu/ui/basket/basket_view.dart';
+import 'package:vsem_edu/ui/basket/basket_view_model.dart';
+import 'package:vsem_edu/ui/home/base_screen.dart';
+import 'package:vsem_edu/ui/home/main_model.dart';
+import 'package:vsem_edu/ui/home/main_view.dart';
+import 'package:vsem_edu/ui/login/codescreen/code_screen.dart';
+import 'package:vsem_edu/ui/login/codescreen/code_view.dart';
+import 'package:vsem_edu/ui/login/codescreen/code_view_model.dart';
+import 'package:vsem_edu/ui/login/login_screen.dart';
+import 'package:vsem_edu/ui/login/login_view.dart';
+import 'package:vsem_edu/ui/login/login_view_model.dart';
+import 'package:vsem_edu/ui/login/register_screen.dart';
+import 'package:vsem_edu/ui/login/register_view.dart';
+import 'package:vsem_edu/ui/login/register_view_model.dart';
+import 'package:vsem_edu/ui/merchantDetail/merchant_detail_model.dart';
+import 'package:vsem_edu/ui/merchantDetail/merchant_view.dart';
+import 'package:vsem_edu/ui/profile/profile_screen.dart';
+import 'package:vsem_edu/ui/profile/profile_view.dart';
+import 'package:vsem_edu/ui/profile/profile_view_model.dart';
 
-import 'home/main_model.dart';
 
 class ProviderApp extends StatelessWidget {
   final MainRepository repository;
@@ -47,6 +50,7 @@ class ProviderApp extends StatelessWidget {
     GetIt.instance.registerFactory<RegisterViewModel>(() => RegisterViewModel(repository: repository));
     GetIt.instance.registerFactory<ProfileViewModel>(() => ProfileViewModel(repository: repository));
     GetIt.instance.registerFactory<BasketViewModel>(() => BasketViewModel(repository: repository));
+    GetIt.instance.registerFactory<CodeViewModel>(() => CodeViewModel(repository: repository));
   }
 
   @override
@@ -60,6 +64,7 @@ class ProviderApp extends StatelessWidget {
         AppRoutes.auth: (context) => RegisterScreen(RegisterView()),
         AppRoutes.profile: (context) => ProfileScreen(ProfileView()),
         AppRoutes.basket: (context) => BasketScreen(BasketView()),
+        AppRoutes.code: (context) => CodeScreen(CodeView()),
       },
     );
   }

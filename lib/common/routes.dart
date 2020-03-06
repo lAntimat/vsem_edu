@@ -9,4 +9,5 @@ class AppRoutes {
   static final auth = '/auth';
   static final profile = '/profile';
   static final basket = '/basket';
+  static final code = '/code';
 }

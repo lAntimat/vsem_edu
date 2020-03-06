@@ -18,6 +18,10 @@ class Globals {
   static const String tokenKey = "token";
   static const String userIdKey = "userId";
 
+  void init() async {
+    token = await getToken();
+  }
+
   Future<void> saveToken(String _token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = _token;
@@ -33,7 +37,7 @@ class Globals {
 
   Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString(tokenKey) ?? "rhpnff7t7mg7f5l0bc940fb12eb3602fefdde66cdf14819";
+    token = prefs.getString(tokenKey) ?? "";
     return token;
   }
 

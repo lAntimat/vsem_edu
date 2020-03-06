@@ -1,11 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:ffi';
 
-import 'package:vsem_edu/home/ImageCarousel.dart';
-import 'package:vsem_edu/home/home_models.dart';
-import 'package:vsem_edu/home/merchant_models.dart';
+import 'package:vsem_edu/network/models/base_response.dart';
+import 'package:vsem_edu/network/models/create_account_response.dart';
+import 'package:vsem_edu/network/models/login_response.dart';
+import 'package:vsem_edu/network/models/profile_response.dart';
+import 'package:vsem_edu/network/models/simple_response.dart';
+import 'package:vsem_edu/network/models/create_user_dto.dart';
+import 'package:vsem_edu/network/models/verify_phone_response.dart';
 import 'package:vsem_edu/network/web_service.dart';
+import 'package:vsem_edu/ui/home/ImageCarousel.dart';
+import 'package:vsem_edu/ui/home/home_models.dart';
+import 'package:vsem_edu/ui/home/merchant_models.dart';
 
 class MainRepository {
   final WebService webService;
@@ -30,6 +38,35 @@ class MainRepository {
     return webService.getMerchants().then((value) {
       var data = ResponseMerchant.fromJson(jsonDecode(value.body));
       return Future.value(data.details.list);
+    });
+  }
+
+  Future<CreateAccountResponse> createUser(CreateUserDto createUserDto) async {
+    return webService.createAccount(createUserDto).then((value) {
+      var data = CreateAccountResponse.fromJson(jsonDecode(value.body));
+      return Future.value(data);
+    });
+  }
+
+  Future<VerifyPhoneResponse> verifyCode(String code, String token) async {
+    return webService.verifyCode(code, token).then((value) {
+      var data = VerifyPhoneResponse.fromJson(jsonDecode(value.body));
+      return Future.value(data);
+    });
+  }
+
+  Future<LoginResponse> login(String login, String password) async {
+    return webService.customerLogin(login, password).then((value) {
+      var data = LoginResponse.fromJson(jsonDecode(value.body));
+      return Future.value(data);
+    });
+  }
+
+  Future<BaseResponse<ProfileResponse>> getProfile() async {
+    return webService.getProfile().then((value) {
+      var data = BaseResponse<ProfileResponse>.fromJson(jsonDecode(value.body));
+      data.data = ProfileResponse.fromJson(data.dataJson);
+      return Future.value(data);
     });
   }
 }

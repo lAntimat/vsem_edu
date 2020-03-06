@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:vsem_edu/common/uuid.dart';
+import 'package:vsem_edu/network/models/create_user_dto.dart';
 import 'package:vsem_edu/network/webservice_response.dart';
 
 import '../globals.dart';
-
-enum HttpRequest { Get, Post, Head, Update, PostFormData }
-
-const int DefaultTimeoutInSeconds = 30;
 
 class WebService {
   static WebService _instance;
@@ -40,6 +37,10 @@ class WebService {
   String _getCuisinesEndpoint = "api/cuisineList";
   String _getSettingsEndpoint = "api/getSettings";
   String _getMerchantsEndpoint = "api/searchMerchant";
+  String _createAccountEndpoint = "api/createAccount";
+  String _verifyCodeEndpoint = "api/verifyCode";
+  String _customerLoginEndpoint = "api/customerLogin";
+  String _getProfileEndpoint = "api/getProfile";
 
   void initClient() {
     _dio = new Dio(); // with default Options
@@ -52,15 +53,22 @@ class WebService {
     _dio.interceptors
         .add(LogInterceptor(responseBody: true, request: true, error: true));
 
-    _defaultOptions = Options(headers: {
-      "Authorization-Token": Globals.getInstance().token,
+    Globals.getInstance().getToken().then((token) {
+      if (token.isNotEmpty) {
+        _defaultOptions = Options(headers: {
+          "Authorization-Token": Globals.getInstance().token,
+        });
+
+        _dio.options.headers = _defaultOptions.headers;
+      }
     });
 
-    _dio.options.headers = _defaultOptions.headers;
+
   }
 
   void addTokenToHeaders(String token) {
-    _defaultOptions.headers["Authorization-Token"] = token;
+    _defaultOptions = Options(headers: {"Authorization-Token": token});
+    _dio.options.headers = _defaultOptions.headers;
   }
 
   Future<WebServiceResponse> getCuisines() async {
@@ -77,15 +85,65 @@ class WebService {
 
   Future<WebServiceResponse> getMerchants() async {
     Map<String, String> params = Map.from(_defaultParams);
-    params.addAll(
-        {
-          "user_token": Globals.getInstance().token,
-          "lat": "55.833511",
-          "lng": "49.069439",
-          "search_type": "byLatLong"
-        });
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+      "lat": "55.833511",
+      "lng": "49.069439",
+      "search_type": "byLatLong"
+    });
 
     var response = await _dio.get(_apiEndpoint + _getMerchantsEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> createAccount(CreateUserDto createUserDto) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    print(createUserDto.toJson());
+
+    var response = await _dio.post(_apiEndpoint + _createAccountEndpoint,
+        queryParameters: params,
+        data: createUserDto.toJson(),
+        options: Options(contentType: "application/x-www-form-urlencoded"));
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> verifyCode(String code, String token) async {
+    Map<String, String> params = Map.from(_defaultParams);
+    params.addAll({
+      "code": code,
+      "verification_type": "verification_mobile",
+      "customer_token": token
+    });
+
+    var response = await _dio.get(_apiEndpoint + _verifyCodeEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> customerLogin(
+      String login, String password) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_mobile": login,
+      "password": password,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _customerLoginEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getProfile() async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getProfileEndpoint,
         queryParameters: params);
     return WebServiceResponse.fromDioResponse(response);
   }

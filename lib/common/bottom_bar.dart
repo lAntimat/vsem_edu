@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vsem_edu/common/routes.dart';
+import 'package:vsem_edu/globals.dart';
 
 class BottomBarWidget extends StatelessWidget {
   @override
@@ -14,7 +15,9 @@ class BottomBarWidget extends StatelessWidget {
             icon: Icon(Icons.supervised_user_circle),
             color: Colors.white,
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.profile);
+              if(Globals.getInstance().token.isEmpty) {
+                Navigator.pushNamed(context, AppRoutes.login);
+              } else Navigator.pushNamed(context, AppRoutes.profile);
             },
           ),
           IconButton(

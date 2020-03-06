@@ -10,8 +10,9 @@ Widget simpleFilledButton(
     onPressed: onPressed,
     child: Text(
       text,
-      style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
-      overflow: TextOverflow.clip,
+      maxLines: 1,
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+      overflow: TextOverflow.ellipsis,
     ),
     textColor: Colors.white,
     color: color,
