@@ -20,21 +20,20 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.background,
-      child: Container(
-                height: double.infinity,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      _buildCarouselSelector(),
-                      _buildCategories(context),
-                      _buildCafePages()
-                    ],
-                  ),
-                ),
-              )
-    );
+        color: AppColors.background,
+        child: Container(
+          height: double.infinity,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                _buildCarouselSelector(),
+                _buildCategories(context),
+                _buildCafePages()
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _buildCategories(BuildContext context) {
@@ -144,12 +143,16 @@ class MainView extends StatelessWidget {
 
   Widget _buildCarouselSelector() {
     return Consumer<MainModel>(
-        builder: (context, model, _) => model.carousel.length > 0
-            ? CarouselWidget(model.carousel).build()
-            : Container(height: 200, child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: CircularProgressIndicator(),
-            )));
+      builder: (context, model, _) => model.carousel.length > 0
+          ? CarouselWidget(model.carousel).build()
+          : Container(
+              height: 200,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: CircularProgressIndicator(),
+              ),
+            ),
+    );
   }
 
   Widget _buildCafePages() {

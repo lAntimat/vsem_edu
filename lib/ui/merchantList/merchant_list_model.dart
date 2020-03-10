@@ -11,24 +11,24 @@ import 'package:vsem_edu/repository/main_repository.dart';
 import 'package:vsem_edu/ui/home/home_models.dart';
 import 'package:vsem_edu/ui/home/merchant_models.dart';
 
-class MerchantDetailModel extends ChangeNotifier {
+class MerchantListModel extends ChangeNotifier {
   final MainRepository repository;
 
   List<CuisineListItem> _cuisines = List();
   List<dynamic> _carousel = List();
   List<MerchantDetail> _cafes = List();
+  List<MerchantDetail> cafes = List();
 
   UnmodifiableListView<CuisineListItem> get cuisines =>
       UnmodifiableListView(_cuisines);
 
   UnmodifiableListView<dynamic> get carousel => UnmodifiableListView(_carousel);
-  UnmodifiableListView<MerchantDetail> get cafes => UnmodifiableListView(_cafes);
 
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
-  MerchantDetailModel({
+  MerchantListModel({
     @required this.repository
   });
 
@@ -55,6 +55,13 @@ class MerchantDetailModel extends ChangeNotifier {
     });
   }
 
+  void sortCafes(String id) {
+    var tempList = _cafes.where((item) => item.merchantId == id);
+    cafes.clear();
+    cafes.addAll(tempList);
+    notifyListeners();
+  }
+
   Future loadCarousel() {
     _isLoading = true;
     notifyListeners();
@@ -73,8 +80,9 @@ class MerchantDetailModel extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    return repository.loadCafesItems().then((cafes) {
-      _cafes.addAll(cafes);
+    return repository.loadCafesItems().then((cafess) {
+      _cafes.addAll(cafess);
+      cafes.addAll(cafess);
       _isLoading = false;
       notifyListeners();
     }).catchError((err) {

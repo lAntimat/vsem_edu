@@ -4,7 +4,7 @@
 
 class AppRoutes {
   static final home = '/';
-  static final merchantDetail = '/merchantDetail';
+  static final merchantDetail = '/merchantList';
   static final login = '/login';
   static final auth = '/auth';
   static final profile = '/profile';

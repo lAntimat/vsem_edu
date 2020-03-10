@@ -7,7 +7,6 @@ import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:vsem_edu/common/routes.dart';
 import 'package:vsem_edu/common/theme.dart';
-import 'package:vsem_edu/globals.dart';
 import 'package:vsem_edu/network/web_service.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
 import 'package:vsem_edu/ui/basket/basket_screen.dart';
@@ -25,8 +24,9 @@ import 'package:vsem_edu/ui/login/login_view_model.dart';
 import 'package:vsem_edu/ui/login/register_screen.dart';
 import 'package:vsem_edu/ui/login/register_view.dart';
 import 'package:vsem_edu/ui/login/register_view_model.dart';
-import 'package:vsem_edu/ui/merchantDetail/merchant_detail_model.dart';
-import 'package:vsem_edu/ui/merchantDetail/merchant_view.dart';
+import 'package:vsem_edu/ui/merchantList/merchant_list_model.dart';
+import 'package:vsem_edu/ui/merchantList/merchant_list_screen.dart';
+import 'package:vsem_edu/ui/merchantList/merchant_list_view.dart';
 import 'package:vsem_edu/ui/profile/profile_screen.dart';
 import 'package:vsem_edu/ui/profile/profile_view.dart';
 import 'package:vsem_edu/ui/profile/profile_view_model.dart';
@@ -44,7 +44,7 @@ class ProviderApp extends StatelessWidget {
   }
 
   void setupLocators() {
-    GetIt.instance.registerFactory<MerchantDetailModel>(() => MerchantDetailModel(repository: repository));
+    GetIt.instance.registerFactory<MerchantListModel>(() => MerchantListModel(repository: repository));
     GetIt.instance.registerFactory<MainModel>(() => MainModel(repository: repository));
     GetIt.instance.registerFactory<LoginViewModel>(() => LoginViewModel(repository: repository));
     GetIt.instance.registerFactory<RegisterViewModel>(() => RegisterViewModel(repository: repository));
@@ -59,7 +59,7 @@ class ProviderApp extends StatelessWidget {
       theme: AppTheme.theme,
       routes: {
         AppRoutes.home: (context) => BaseScreen(MainView()),
-        AppRoutes.merchantDetail: (context) => MerchantView(),
+        AppRoutes.merchantDetail: (context) => MerchantListScreen(MerchantListView()),
         AppRoutes.login: (context) => LoginScreen(LoginView()),
         AppRoutes.auth: (context) => RegisterScreen(RegisterView()),
         AppRoutes.profile: (context) => ProfileScreen(ProfileView()),

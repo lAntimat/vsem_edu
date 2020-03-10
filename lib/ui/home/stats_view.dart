@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:vsem_edu/home/main_model.dart';
+import 'package:vsem_edu/ui/home/main_model.dart';
 
 class StatsView extends StatelessWidget {
   const StatsView();
