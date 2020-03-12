@@ -12,7 +12,7 @@ import 'package:vsem_edu/ui/home/main_model.dart';
 
 import 'carousel_widget.dart';
 import 'home_models.dart';
-import 'merchant_models.dart';
+import '../../network/models/merchant_models.dart';
 
 class MainView extends StatelessWidget {
   const MainView();

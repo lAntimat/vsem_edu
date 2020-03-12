@@ -43,64 +43,67 @@ class MerchantListView extends StatelessWidget {
       return Column(
           children: List.generate(model.cafes.length, (index) {
         var item = model.cafes[index];
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Card(
-            color: Colors.white,
-            elevation: 8,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                CachedNetworkImage(
-                  height: 100,
-                  width: 100,
-                  imageUrl: item.backgroundUrl,
-                  fit: BoxFit.cover,
-                ),
-                Container(
-                  width: 16,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          item.restaurantName,
-                          style: TextStyle(
-                              fontSize: 14, color: AppColors.blackText),
-                        ),
-                        Container(
-                          height: 8,
-                        ),
-                        Text(
-                          "Длиннооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооо описание ресторана",
-                          style: TextStyle(
-                              fontSize: 14, color: AppColors.blackText),
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 3,
-                        )
-                      ],
+        return GestureDetector(
+          onTap: () { model.onListItemClick(context, index); },
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              color: Colors.white,
+              elevation: 8,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  CachedNetworkImage(
+                    height: 100,
+                    width: 100,
+                    imageUrl: item.backgroundUrl,
+                    fit: BoxFit.cover,
+                  ),
+                  Container(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            item.restaurantName,
+                            style: TextStyle(
+                                fontSize: 14, color: AppColors.blackText),
+                          ),
+                          Container(
+                            height: 8,
+                          ),
+                          Text(
+                            "Длиннооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооооо описание ресторана",
+                            style: TextStyle(
+                                fontSize: 14, color: AppColors.blackText),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SmoothStarRating(
-                      allowHalfRating: false,
-                      starCount: 5,
-                      rating: 3.8,
-                      size: 12.0,
-                      filledIconData: Icons.star,
-                      halfFilledIconData: Icons.star_half,
-                      defaultIconData: Icons.star_border,
-                      color: AppColors.startFilledColor,
-                      borderColor: AppColors.startColor,
-                      spacing: 0.0),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SmoothStarRating(
+                        allowHalfRating: false,
+                        starCount: 5,
+                        rating: 3.8,
+                        size: 12.0,
+                        filledIconData: Icons.star,
+                        halfFilledIconData: Icons.star_half,
+                        defaultIconData: Icons.star_border,
+                        color: AppColors.startFilledColor,
+                        borderColor: AppColors.startColor,
+                        spacing: 0.0),
+                  ),
+                ],
+              ),
             ),
           ),
         );

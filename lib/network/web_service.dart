@@ -41,6 +41,7 @@ class WebService {
   String _verifyCodeEndpoint = "api/verifyCode";
   String _customerLoginEndpoint = "api/customerLogin";
   String _getProfileEndpoint = "api/getProfile";
+  String _getRestaurantInfoEndpoint = "api/getRestaurantInfo";
 
   void initClient() {
     _dio = new Dio(); // with default Options
@@ -144,6 +145,19 @@ class WebService {
     });
 
     var response = await _dio.get(_apiEndpoint + _getProfileEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getRestaurantInfo(String merchantId) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+      "merchant_id": merchantId,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getRestaurantInfoEndpoint,
         queryParameters: params);
     return WebServiceResponse.fromDioResponse(response);
   }

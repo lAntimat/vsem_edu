@@ -7,13 +7,14 @@ import 'package:vsem_edu/network/models/base_response.dart';
 import 'package:vsem_edu/network/models/create_account_response.dart';
 import 'package:vsem_edu/network/models/login_response.dart';
 import 'package:vsem_edu/network/models/profile_response.dart';
+import 'package:vsem_edu/network/models/restaurant_info_response.dart';
 import 'package:vsem_edu/network/models/simple_response.dart';
 import 'package:vsem_edu/network/models/create_user_dto.dart';
 import 'package:vsem_edu/network/models/verify_phone_response.dart';
 import 'package:vsem_edu/network/web_service.dart';
 import 'package:vsem_edu/ui/home/ImageCarousel.dart';
 import 'package:vsem_edu/ui/home/home_models.dart';
-import 'package:vsem_edu/ui/home/merchant_models.dart';
+import 'package:vsem_edu/network/models/merchant_models.dart';
 
 class MainRepository {
   final WebService webService;
@@ -27,7 +28,7 @@ class MainRepository {
     });
   }
 
-  Future<List<dynamic>> loadCarouselItems() async {
+  Future<List<String>> loadCarouselItems() async {
     return webService.getCarousel().then((value) {
       var data = ImageCarouselParent.fromJson(jsonDecode(value.body));
       return Future.value(data.urls);
@@ -66,6 +67,14 @@ class MainRepository {
     return webService.getProfile().then((value) {
       var data = BaseResponse<ProfileResponse>.fromJson(jsonDecode(value.body));
       data.data = ProfileResponse.fromJson(data.dataJson);
+      return Future.value(data);
+    });
+  }
+
+  Future<BaseResponse<RestaurantInfoResponse>> getRestaurantInfo(String merchantId) async {
+    return webService.getRestaurantInfo(merchantId).then((value) {
+      var data = BaseResponse<RestaurantInfoResponse>.fromJson(jsonDecode(value.body));
+      data.data = RestaurantInfoResponse.fromJson(data.dataJson);
       return Future.value(data);
     });
   }

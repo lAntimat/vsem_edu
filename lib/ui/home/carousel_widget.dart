@@ -13,7 +13,7 @@ List<T> map<T>(List list, Function handler) {
 }
 
 class CarouselWidget {
-  List<dynamic> imgList = List();
+  List<String> imgList = List();
   List carouselItems;
 
   CarouselWidget(this.imgList) {

@@ -3,33 +3,27 @@
 // in the LICENSE file.
 
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
-import 'package:vsem_edu/common/routes.dart';
+import 'package:vsem_edu/network/models/restaurant_info_response.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
 import 'package:vsem_edu/ui/home/home_models.dart';
-import 'package:vsem_edu/network/models/merchant_models.dart';
 
-class MerchantListModel extends ChangeNotifier {
+class MerchantDetailModel extends ChangeNotifier {
   final MainRepository repository;
 
   List<CuisineListItem> _cuisines = List();
-  List<String> _carousel = List();
-  List<MerchantDetail> _cafes = List();
-  List<MerchantDetail> cafes = List();
-
-  UnmodifiableListView<CuisineListItem> get cuisines =>
-      UnmodifiableListView(_cuisines);
-
-  UnmodifiableListView<String> get carousel => UnmodifiableListView(_carousel);
+  List<dynamic> carousel = List();
+  RestaurantInfoResponse _restaurant;
 
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
-  MerchantListModel({
+  String merchantId;
+
+  MerchantDetailModel({
     @required this.repository
   });
 
@@ -37,9 +31,21 @@ class MerchantListModel extends ChangeNotifier {
   void addListener(VoidCallback listener) {
     super.addListener(listener);
     // update data for every subscriber, especially for the first one
-    loadCuisines();
-    loadCarousel();
-    loadCafes();
+    loadRestaurantInfo("3");
+  }
+
+  Future loadCarousel() {
+    _isLoading = true;
+    notifyListeners();
+
+    return repository.loadCarouselItems().then((loadedTodos) {
+      carousel.addAll(loadedTodos);
+      _isLoading = false;
+      notifyListeners();
+    }).catchError((err) {
+      _isLoading = false;
+      notifyListeners();
+    });
   }
 
   Future loadCuisines() {
@@ -56,43 +62,19 @@ class MerchantListModel extends ChangeNotifier {
     });
   }
 
-  void sortCafes(String id) {
-    var tempList = _cafes.where((item) => item.merchantId == id);
-    cafes.clear();
-    cafes.addAll(tempList);
-    notifyListeners();
-  }
-
-  Future loadCarousel() {
+  Future loadRestaurantInfo(String merchantId) {
     _isLoading = true;
     notifyListeners();
 
-    return repository.loadCarouselItems().then((loadedTodos) {
-      _carousel.addAll(loadedTodos);
+    return repository.getRestaurantInfo(merchantId).then((restaurant) {
+      _restaurant = restaurant.data;
+      carousel.add(restaurant.data.backgroundUrl);
       _isLoading = false;
+
       notifyListeners();
     }).catchError((err) {
       _isLoading = false;
       notifyListeners();
     });
-  }
-
-  Future loadCafes() {
-    _isLoading = true;
-    notifyListeners();
-
-    return repository.loadCafesItems().then((cafess) {
-      _cafes.addAll(cafess);
-      cafes.addAll(cafess);
-      _isLoading = false;
-      notifyListeners();
-    }).catchError((err) {
-      _isLoading = false;
-      notifyListeners();
-    });
-  }
-
-  void onListItemClick(BuildContext context, int index) {
-    Navigator.pushNamed(context, AppRoutes.merchantDetail, arguments: cafes[index].merchantId);
   }
 }

@@ -24,7 +24,7 @@ class BottomBarWidget extends StatelessWidget {
             icon: Icon(Icons.volume_mute),
             color: Colors.white,
             onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.merchantDetail);
+              Navigator.pushNamed(context, AppRoutes.merchantList);
             },
           ),
         ],

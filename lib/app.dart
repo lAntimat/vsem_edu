@@ -24,6 +24,9 @@ import 'package:vsem_edu/ui/login/login_view_model.dart';
 import 'package:vsem_edu/ui/login/register_screen.dart';
 import 'package:vsem_edu/ui/login/register_view.dart';
 import 'package:vsem_edu/ui/login/register_view_model.dart';
+import 'package:vsem_edu/ui/merchantDetail/merchant_detail_model.dart';
+import 'package:vsem_edu/ui/merchantDetail/merchant_detail_screen.dart';
+import 'package:vsem_edu/ui/merchantDetail/merchant_detail_view.dart';
 import 'package:vsem_edu/ui/merchantList/merchant_list_model.dart';
 import 'package:vsem_edu/ui/merchantList/merchant_list_screen.dart';
 import 'package:vsem_edu/ui/merchantList/merchant_list_view.dart';
@@ -51,6 +54,7 @@ class ProviderApp extends StatelessWidget {
     GetIt.instance.registerFactory<ProfileViewModel>(() => ProfileViewModel(repository: repository));
     GetIt.instance.registerFactory<BasketViewModel>(() => BasketViewModel(repository: repository));
     GetIt.instance.registerFactory<CodeViewModel>(() => CodeViewModel(repository: repository));
+    GetIt.instance.registerFactory<MerchantDetailModel>(() => MerchantDetailModel(repository: repository));
   }
 
   @override
@@ -59,12 +63,13 @@ class ProviderApp extends StatelessWidget {
       theme: AppTheme.theme,
       routes: {
         AppRoutes.home: (context) => BaseScreen(MainView()),
-        AppRoutes.merchantDetail: (context) => MerchantListScreen(MerchantListView()),
+        AppRoutes.merchantList: (context) => MerchantListScreen(MerchantListView()),
         AppRoutes.login: (context) => LoginScreen(LoginView()),
         AppRoutes.auth: (context) => RegisterScreen(RegisterView()),
         AppRoutes.profile: (context) => ProfileScreen(ProfileView()),
         AppRoutes.basket: (context) => BasketScreen(BasketView()),
         AppRoutes.code: (context) => CodeScreen(CodeView()),
+        AppRoutes.merchantDetail: (context) => MerchantDetailScreen(MerchantDetailView()),
       },
     );
   }

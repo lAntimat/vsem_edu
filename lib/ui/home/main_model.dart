@@ -10,19 +10,19 @@ import 'package:meta/meta.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
 
 import 'home_models.dart';
-import 'merchant_models.dart';
+import '../../network/models/merchant_models.dart';
 
 class MainModel extends ChangeNotifier {
   final MainRepository repository;
 
   List<CuisineListItem> _cuisines = List();
-  List<dynamic> _carousel = List();
+  List<String> _carousel = List();
   List<MerchantDetail> _cafes = List();
 
   UnmodifiableListView<CuisineListItem> get cuisines =>
       UnmodifiableListView(_cuisines);
 
-  UnmodifiableListView<dynamic> get carousel => UnmodifiableListView(_carousel);
+  UnmodifiableListView<String> get carousel => UnmodifiableListView(_carousel);
   UnmodifiableListView<MerchantDetail> get cafes => UnmodifiableListView(_cafes);
 
   bool _isLoading = false;

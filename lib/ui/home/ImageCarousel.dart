@@ -1,5 +1,5 @@
 class ImageCarouselParent {
-  List<dynamic> urls;
+  List<String> urls;
 
   ImageCarouselParent(this.urls);
 
