@@ -5,7 +5,7 @@ class ImageCarouselParent {
 
   factory ImageCarouselParent.fromJson(Map<String, dynamic> d) {
 
-    var listUrls = d["details"]["settings"]["startup"]["banner"];
+    var listUrls =  new List<String>.from(d["details"]["settings"]["startup"]["banner"]);
 
     return new ImageCarouselParent(listUrls);
   }

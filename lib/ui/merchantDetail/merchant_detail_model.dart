@@ -14,8 +14,8 @@ class MerchantDetailModel extends ChangeNotifier {
   final MainRepository repository;
 
   List<CuisineListItem> _cuisines = List();
-  List<dynamic> carousel = List();
-  RestaurantInfoResponse _restaurant;
+  List<String> carousel = List();
+  RestaurantInfoResponse restaurantInfo;
 
   bool _isLoading = false;
 
@@ -67,7 +67,7 @@ class MerchantDetailModel extends ChangeNotifier {
     notifyListeners();
 
     return repository.getRestaurantInfo(merchantId).then((restaurant) {
-      _restaurant = restaurant.data;
+      restaurantInfo = restaurant.data;
       carousel.add(restaurant.data.backgroundUrl);
       _isLoading = false;
 

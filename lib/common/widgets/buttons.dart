@@ -44,15 +44,15 @@ Widget simpleOutlineButton(
   );
 }
 
-Widget buttonTransparentBg(String text, {@required VoidCallback onPressed}) {
+Widget buttonTransparentBg(String text, {@required VoidCallback onPressed, Color textColor = Colors.white, double fontSize = 14}) {
   return OutlineButton(
     onPressed: onPressed,
     child: Text(
       text,
-      style: TextStyle(fontSize: 14, decoration: TextDecoration.underline),
+      style: TextStyle(fontSize: fontSize, decoration: TextDecoration.underline),
       overflow: TextOverflow.clip,
     ),
-    textColor: Colors.white,
+    textColor: textColor,
     borderSide: BorderSide(color: Colors.transparent),
     highlightedBorderColor: Colors.transparent,
     padding:

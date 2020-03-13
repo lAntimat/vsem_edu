@@ -14,4 +14,5 @@ class AppColors {
   static const Color startFilledColor = Color(0xFFe25100);
   static const Color startColor = Color(0xFF808080);
   static const Color btnBg1 = Color(0xFF8938cf);
+  static const Color orange = Color(0xFFe25100);
 }
