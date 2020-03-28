@@ -12,6 +12,8 @@ import 'package:vsem_edu/network/models/login_response.dart';
 import 'package:vsem_edu/network/models/menu_category_items_parent.dart';
 import 'package:vsem_edu/network/models/menu_category_product_item.dart';
 import 'package:vsem_edu/network/models/menu_category_product_item_parent.dart';
+import 'package:vsem_edu/network/models/order.dart';
+import 'package:vsem_edu/network/models/orders_parent.dart';
 import 'package:vsem_edu/network/models/profile_response.dart';
 import 'package:vsem_edu/network/models/restaurant_info_response.dart';
 import 'package:vsem_edu/network/models/simple_response.dart';
@@ -104,6 +106,15 @@ class MainRepository {
   Future<List<MenuCategoryProductItem>> getBasket(String merchantId, String catId) async {
     return webService.getMenuProducts(merchantId, catId).then((value) {
       var data = MenuCategoryProductItemParent.fromJson(jsonDecode(value.body));
+      return Future.value(data.items);
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
+  Future<List<Order>> getOrders() async {
+    return webService.getOrders().then((value) {
+      var data = OrdersParent.fromJson(jsonDecode(value.body));
       return Future.value(data.items);
     }).catchError((error) {
       print(error);

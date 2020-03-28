@@ -50,6 +50,10 @@ class ProfileViewModel extends ChangeNotifier {
     Navigator.pushNamed(context, AppRoutes.address);
   }
 
+  void onOrdersClick(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.orders);
+  }
+
   void onExitClick(BuildContext context) {
     Globals.getInstance().clearUser();
     Navigator.pop(context);

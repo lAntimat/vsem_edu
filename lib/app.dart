@@ -38,6 +38,9 @@ import 'package:vsem_edu/ui/merchantDetail/merchant_detail_view.dart';
 import 'package:vsem_edu/ui/merchantList/merchant_list_model.dart';
 import 'package:vsem_edu/ui/merchantList/merchant_list_screen.dart';
 import 'package:vsem_edu/ui/merchantList/merchant_list_view.dart';
+import 'package:vsem_edu/ui/orders/orders_screen.dart';
+import 'package:vsem_edu/ui/orders/orders_view.dart';
+import 'package:vsem_edu/ui/orders/orders_view_model.dart';
 import 'package:vsem_edu/ui/profile/profile_screen.dart';
 import 'package:vsem_edu/ui/profile/profile_view.dart';
 import 'package:vsem_edu/ui/profile/profile_view_model.dart';
@@ -65,6 +68,7 @@ class ProviderApp extends StatelessWidget {
     GetIt.instance.registerFactory<MerchantDetailModel>(() => MerchantDetailModel(repository: repository));
     GetIt.instance.registerFactory<MerchantCategoryProductsModel>(() => MerchantCategoryProductsModel(repository: repository));
     GetIt.instance.registerFactory<AddressViewModel>(() => AddressViewModel(repository: repository));
+    GetIt.instance.registerFactory<OrdersViewModel>(() => OrdersViewModel(repository: repository));
   }
 
   @override
@@ -83,6 +87,7 @@ class ProviderApp extends StatelessWidget {
         AppRoutes.merchantCategoryProducts: (context) => MerchantCategoryProductScreen(MerchantCategoryProductView()),
         AppRoutes.address: (context) => AddressScreen(AddressView()),
         AppRoutes.addAddress: (context) => AddAddressScreen(AddAddressView()),
+        AppRoutes.orders: (context) => OrdersScreen(OrdersView()),
       },
     );
   }

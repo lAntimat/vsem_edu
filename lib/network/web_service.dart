@@ -45,6 +45,7 @@ class WebService {
   String _getRestaurantInfoEndpoint = "api/getRestaurantInfo";
   String _getRestaurantMenuEndpoint = "api/getMerchantMenu";
   String _getMenuProductsEndpoint = "api/getItemByCategory";
+  String _getOrdersEndpoint = "api/OrderList";
   String _getAddressesEndpoint = "api/AddressBookList";
   String _saveAddressEndpoint = "api/saveAddressBook";
 
@@ -190,6 +191,18 @@ class WebService {
     });
 
     var response = await _dio.get(_apiEndpoint + _getMenuProductsEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getOrders() async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getOrdersEndpoint,
         queryParameters: params);
     return WebServiceResponse.fromDioResponse(response);
   }

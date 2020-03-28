@@ -14,4 +14,5 @@ class AppRoutes {
   static final code = '/code';
   static final address = '/address';
   static final addAddress = '/addAddress';
+  static final orders = '/orders';
 }
