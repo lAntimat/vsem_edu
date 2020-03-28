@@ -6,14 +6,19 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:vsem_edu/common/routes.dart';
+import 'package:vsem_edu/network/models/menu_category_item.dart';
+import 'package:vsem_edu/network/models/menu_category_items_parent.dart';
 import 'package:vsem_edu/network/models/restaurant_info_response.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
+import 'package:vsem_edu/ui/argumentmodels/MerchantDetailArguments.dart';
 import 'package:vsem_edu/ui/home/home_models.dart';
 
 class MerchantDetailModel extends ChangeNotifier {
   final MainRepository repository;
 
   List<CuisineListItem> _cuisines = List();
+  MenuCategoryItemParent menu;
   List<String> carousel = List();
   RestaurantInfoResponse restaurantInfo;
 
@@ -21,7 +26,7 @@ class MerchantDetailModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
 
-  String merchantId;
+  String merchantId = "3";
 
   MerchantDetailModel({
     @required this.repository
@@ -31,7 +36,8 @@ class MerchantDetailModel extends ChangeNotifier {
   void addListener(VoidCallback listener) {
     super.addListener(listener);
     // update data for every subscriber, especially for the first one
-    loadRestaurantInfo("3");
+    loadRestaurantInfo();
+    loadMenu();
   }
 
   Future loadCarousel() {
@@ -48,12 +54,13 @@ class MerchantDetailModel extends ChangeNotifier {
     });
   }
 
-  Future loadCuisines() {
+  Future loadMenu() {
     _isLoading = true;
     notifyListeners();
 
-    return repository.loadCuisine().then((loadedTodos) {
-      _cuisines.addAll(loadedTodos);
+    return repository.getMenu(merchantId).then((loadedMenu) {
+      menu = loadedMenu;
+      print(menu.toString());
       _isLoading = false;
       notifyListeners();
     }).catchError((err) {
@@ -62,7 +69,7 @@ class MerchantDetailModel extends ChangeNotifier {
     });
   }
 
-  Future loadRestaurantInfo(String merchantId) {
+  Future loadRestaurantInfo() {
     _isLoading = true;
     notifyListeners();
 
@@ -77,4 +84,26 @@ class MerchantDetailModel extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  Future loadRestaurantCategories(String merchantId) {
+    _isLoading = true;
+    notifyListeners();
+
+    return repository.getRestaurantInfo(merchantId).then((restaurant) {
+      restaurantInfo = restaurant.data;
+      carousel.add(restaurant.data.backgroundUrl);
+      _isLoading = false;
+
+      notifyListeners();
+    }).catchError((err) {
+      _isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  void onMenuCategoryItemClick(BuildContext context, MenuCategoryItem item) {
+    var args = MerchantDetailArguments(merchantId, item.catId, item.categoryName);
+    Navigator.pushNamed(context, AppRoutes.merchantCategoryProducts, arguments: args);
+  }
+
 }

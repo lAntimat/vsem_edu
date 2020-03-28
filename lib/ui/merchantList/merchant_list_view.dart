@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:vsem_edu/common/app_colors.dart';
+import 'package:vsem_edu/common/widgets/progress_bar.dart';
 import 'package:vsem_edu/ui/home/carousel_widget.dart';
 import 'package:vsem_edu/ui/merchantList/merchant_list_model.dart';
 
@@ -32,7 +33,7 @@ class MerchantListView extends StatelessWidget {
               )
             : Container(
                 height: double.infinity,
-                child: Center(child: CircularProgressIndicator()),
+                child: Center(child: ProgressBar()),
               ),
       ),
     );
@@ -118,7 +119,7 @@ class MerchantListView extends StatelessWidget {
             height: 200,
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: CircularProgressIndicator(),
+              child: ProgressBar(),
             ),
           );
   }

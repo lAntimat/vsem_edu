@@ -7,6 +7,7 @@ class AppColors {
   static const Color lightGrey = Color.fromARGB(255, 61, 63, 69);
   static const Color lightGreyBg = Color(0xFFf2f2f2);
   static const Color blackText = Color(0xFF353535);
+  static const Color secondaryBlackText = Color(0xFF4d4d4d);
   static const Color blackBg = Color(0xFF1a1a1a);
   static const Color buttonRed = Color(0xFFDA3901);
   static const Color cardBg = Colors.white;
@@ -15,4 +16,5 @@ class AppColors {
   static const Color startColor = Color(0xFF808080);
   static const Color btnBg1 = Color(0xFF8938cf);
   static const Color orange = Color(0xFFe25100);
+  static const Color divider = Color(0xFFe6e6e6);
 }

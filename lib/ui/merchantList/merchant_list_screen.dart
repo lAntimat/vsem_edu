@@ -9,10 +9,10 @@ class MerchantListScreen extends StatefulWidget {
   const MerchantListScreen(this.child);
 
   @override
-  _MerchantDetailScreen createState() => _MerchantDetailScreen();
+  _MerchantListScreen createState() => _MerchantListScreen();
 }
 
-class _MerchantDetailScreen extends State<MerchantListScreen> {
+class _MerchantListScreen extends State<MerchantListScreen> {
   @override
   void dispose() {
     super.dispose();
@@ -20,6 +20,8 @@ class _MerchantDetailScreen extends State<MerchantListScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Заведения"),

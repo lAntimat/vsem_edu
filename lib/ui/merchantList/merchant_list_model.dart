@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 import 'package:vsem_edu/common/routes.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
+import 'package:vsem_edu/ui/argumentmodels/MerchantDetailArguments.dart';
 import 'package:vsem_edu/ui/home/home_models.dart';
 import 'package:vsem_edu/network/models/merchant_models.dart';
 
@@ -93,6 +94,8 @@ class MerchantListModel extends ChangeNotifier {
   }
 
   void onListItemClick(BuildContext context, int index) {
-    Navigator.pushNamed(context, AppRoutes.merchantDetail, arguments: cafes[index].merchantId);
+    var item = cafes[index];
+    var args = MerchantDetailArguments(item.merchantId, "", item.restaurantName);
+    Navigator.pushNamed(context, AppRoutes.merchantDetail, arguments: args);
   }
 }

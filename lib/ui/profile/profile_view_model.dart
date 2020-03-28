@@ -7,6 +7,7 @@ import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:vsem_edu/common/routes.dart';
 import 'package:vsem_edu/globals.dart';
 import 'package:vsem_edu/network/models/profile_response.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
@@ -43,6 +44,10 @@ class ProfileViewModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
+  }
+
+  void onAddressClick(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.address);
   }
 
   void onExitClick(BuildContext context) {

@@ -3,9 +3,15 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:ffi';
 
+import 'package:vsem_edu/network/models/address.dart';
+import 'package:vsem_edu/network/models/addressRequest.dart';
+import 'package:vsem_edu/network/models/address_parent.dart';
 import 'package:vsem_edu/network/models/base_response.dart';
 import 'package:vsem_edu/network/models/create_account_response.dart';
 import 'package:vsem_edu/network/models/login_response.dart';
+import 'package:vsem_edu/network/models/menu_category_items_parent.dart';
+import 'package:vsem_edu/network/models/menu_category_product_item.dart';
+import 'package:vsem_edu/network/models/menu_category_product_item_parent.dart';
 import 'package:vsem_edu/network/models/profile_response.dart';
 import 'package:vsem_edu/network/models/restaurant_info_response.dart';
 import 'package:vsem_edu/network/models/simple_response.dart';
@@ -76,6 +82,49 @@ class MainRepository {
       var data = BaseResponse<RestaurantInfoResponse>.fromJson(jsonDecode(value.body));
       data.data = RestaurantInfoResponse.fromJson(data.dataJson);
       return Future.value(data);
+    });
+  }
+
+  Future<MenuCategoryItemParent> getMenu(String merchantId) async {
+    return webService.getMenu(merchantId).then((value) {
+      var data = MenuCategoryItemParent.fromJson(jsonDecode(value.body));
+      return Future.value(data);
+    });
+  }
+
+  Future<List<MenuCategoryProductItem>> getMenuProducts(String merchantId, String catId) async {
+    return webService.getMenuProducts(merchantId, catId).then((value) {
+      var data = MenuCategoryProductItemParent.fromJson(jsonDecode(value.body));
+      return Future.value(data.items);
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
+  Future<List<MenuCategoryProductItem>> getBasket(String merchantId, String catId) async {
+    return webService.getMenuProducts(merchantId, catId).then((value) {
+      var data = MenuCategoryProductItemParent.fromJson(jsonDecode(value.body));
+      return Future.value(data.items);
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
+  Future<List<Address>> getAddresses() async {
+    return webService.getAddresses().then((value) {
+      var data = AddressParent.fromJson(jsonDecode(value.body));
+      return Future.value(data.items);
+    }).catchError((error) {
+      print(error);
+    });
+  }
+
+  Future<List<Address>> saveAddress(AddressRequest address) async {
+    return webService.saveAddress(address).then((value) {
+      var data = AddressParent.fromJson(jsonDecode(value.body));
+      return Future.value(data.items);
+    }).catchError((error) {
+      print(error);
     });
   }
 }

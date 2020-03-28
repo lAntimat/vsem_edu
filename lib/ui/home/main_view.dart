@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:vsem_edu/common/app_colors.dart';
 import 'package:vsem_edu/common/theme.dart';
+import 'package:vsem_edu/common/widgets/progress_bar.dart';
 import 'package:vsem_edu/ui/home/main_model.dart';
 
 import 'carousel_widget.dart';
@@ -149,7 +150,7 @@ class MainView extends StatelessWidget {
               height: 200,
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: CircularProgressIndicator(),
+                child: ProgressBar(),
               ),
             ),
     );

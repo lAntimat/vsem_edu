@@ -54,7 +54,9 @@ class ProfileView extends StatelessWidget {
                     children: <Widget>[
                       profileItemWidget("Главная", onPressed: () {}),
                       profileItemWidget("Мои заказы"),
-                      profileItemWidget("Адреса доставки"),
+                      profileItemWidget("Адреса доставки", onPressed: () {
+                        model.onAddressClick(context);
+                      }),
                       profileItemWidget("Баллы", extraText: "1911"),
                       profileItemWidget("Настройки"),
                       profileItemWidget("Выйти", onPressed: () {

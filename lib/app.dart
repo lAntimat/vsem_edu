@@ -9,6 +9,11 @@ import 'package:vsem_edu/common/routes.dart';
 import 'package:vsem_edu/common/theme.dart';
 import 'package:vsem_edu/network/web_service.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
+import 'package:vsem_edu/ui/address/add_address_screen.dart';
+import 'package:vsem_edu/ui/address/add_address_view.dart';
+import 'package:vsem_edu/ui/address/address_screen.dart';
+import 'package:vsem_edu/ui/address/address_view.dart';
+import 'package:vsem_edu/ui/address/address_view_model.dart';
 import 'package:vsem_edu/ui/basket/basket_screen.dart';
 import 'package:vsem_edu/ui/basket/basket_view.dart';
 import 'package:vsem_edu/ui/basket/basket_view_model.dart';
@@ -24,6 +29,9 @@ import 'package:vsem_edu/ui/login/login_view_model.dart';
 import 'package:vsem_edu/ui/login/register_screen.dart';
 import 'package:vsem_edu/ui/login/register_view.dart';
 import 'package:vsem_edu/ui/login/register_view_model.dart';
+import 'package:vsem_edu/ui/menuCategoryDetail/merchant_category_product_view.dart';
+import 'package:vsem_edu/ui/menuCategoryDetail/merchant_category_products_model.dart';
+import 'package:vsem_edu/ui/menuCategoryDetail/merchant_category_products_screen.dart';
 import 'package:vsem_edu/ui/merchantDetail/merchant_detail_model.dart';
 import 'package:vsem_edu/ui/merchantDetail/merchant_detail_screen.dart';
 import 'package:vsem_edu/ui/merchantDetail/merchant_detail_view.dart';
@@ -55,6 +63,8 @@ class ProviderApp extends StatelessWidget {
     GetIt.instance.registerFactory<BasketViewModel>(() => BasketViewModel(repository: repository));
     GetIt.instance.registerFactory<CodeViewModel>(() => CodeViewModel(repository: repository));
     GetIt.instance.registerFactory<MerchantDetailModel>(() => MerchantDetailModel(repository: repository));
+    GetIt.instance.registerFactory<MerchantCategoryProductsModel>(() => MerchantCategoryProductsModel(repository: repository));
+    GetIt.instance.registerFactory<AddressViewModel>(() => AddressViewModel(repository: repository));
   }
 
   @override
@@ -70,6 +80,9 @@ class ProviderApp extends StatelessWidget {
         AppRoutes.basket: (context) => BasketScreen(BasketView()),
         AppRoutes.code: (context) => CodeScreen(CodeView()),
         AppRoutes.merchantDetail: (context) => MerchantDetailScreen(MerchantDetailView()),
+        AppRoutes.merchantCategoryProducts: (context) => MerchantCategoryProductScreen(MerchantCategoryProductView()),
+        AppRoutes.address: (context) => AddressScreen(AddressView()),
+        AppRoutes.addAddress: (context) => AddAddressScreen(AddAddressView()),
       },
     );
   }

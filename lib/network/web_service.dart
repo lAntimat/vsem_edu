@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:vsem_edu/common/uuid.dart';
+import 'package:vsem_edu/network/models/addressRequest.dart';
 import 'package:vsem_edu/network/models/create_user_dto.dart';
 import 'package:vsem_edu/network/webservice_response.dart';
 
@@ -42,6 +43,10 @@ class WebService {
   String _customerLoginEndpoint = "api/customerLogin";
   String _getProfileEndpoint = "api/getProfile";
   String _getRestaurantInfoEndpoint = "api/getRestaurantInfo";
+  String _getRestaurantMenuEndpoint = "api/getMerchantMenu";
+  String _getMenuProductsEndpoint = "api/getItemByCategory";
+  String _getAddressesEndpoint = "api/AddressBookList";
+  String _saveAddressEndpoint = "api/saveAddressBook";
 
   void initClient() {
     _dio = new Dio(); // with default Options
@@ -159,6 +164,59 @@ class WebService {
 
     var response = await _dio.get(_apiEndpoint + _getRestaurantInfoEndpoint,
         queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getMenu(String merchantId) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+      "merchant_id": merchantId,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getRestaurantMenuEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getMenuProducts(String merchantId, String catId) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+      "merchant_id": merchantId,
+      "cat_id": catId,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getMenuProductsEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getAddresses() async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getAddressesEndpoint,
+        queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> saveAddress(AddressRequest address) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+    });
+
+    var response = await _dio.post(_apiEndpoint + _saveAddressEndpoint,
+        queryParameters: params,
+        data: address.toJson(),
+        options: Options(contentType: "application/x-www-form-urlencoded"));
     return WebServiceResponse.fromDioResponse(response);
   }
 }
