@@ -1,10 +1,21 @@
-import 'package:vsem_edu/network/models/base_response2.dart';
-
 class Point {
+  String label;
+  int value;
+  String pointType;
 
-  /*MenuCategoryProductItem.fromJson(Map<String, dynamic> json) {
-    itemId = json['item_id'];
-    merchantId = json['merchant_id'];
-    itemName = json['item_name'];
-  }*/
+  Point({this.label, this.value, this.pointType});
+
+  Point.fromJson(Map<String, dynamic> json) {
+    label = json['label'];
+    value = json['value'];
+    pointType = json['point_type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['label'] = this.label;
+    data['value'] = this.value;
+    data['point_type'] = this.pointType;
+    return data;
+  }
 }

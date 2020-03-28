@@ -7,6 +7,7 @@ import 'package:vsem_edu/network/models/address.dart';
 import 'package:vsem_edu/network/models/addressRequest.dart';
 import 'package:vsem_edu/network/models/address_parent.dart';
 import 'package:vsem_edu/network/models/base_response.dart';
+import 'package:vsem_edu/network/models/base_response2.dart';
 import 'package:vsem_edu/network/models/create_account_response.dart';
 import 'package:vsem_edu/network/models/login_response.dart';
 import 'package:vsem_edu/network/models/menu_category_items_parent.dart';
@@ -14,6 +15,7 @@ import 'package:vsem_edu/network/models/menu_category_product_item.dart';
 import 'package:vsem_edu/network/models/menu_category_product_item_parent.dart';
 import 'package:vsem_edu/network/models/order.dart';
 import 'package:vsem_edu/network/models/orders_parent.dart';
+import 'package:vsem_edu/network/models/points_parent.dart';
 import 'package:vsem_edu/network/models/profile_response.dart';
 import 'package:vsem_edu/network/models/restaurant_info_response.dart';
 import 'package:vsem_edu/network/models/simple_response.dart';
@@ -136,6 +138,13 @@ class MainRepository {
       return Future.value(data.items);
     }).catchError((error) {
       print(error);
+    });
+  }
+
+  Future<PointsParent> getPoints() async {
+    return webService.getPoints().then((value) {
+      var data = PointsParent.fromJson(jsonDecode(value.body));
+      return Future.value(data);
     });
   }
 }

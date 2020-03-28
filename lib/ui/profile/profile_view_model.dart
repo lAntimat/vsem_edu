@@ -2,8 +2,6 @@
 // Use of this source code is governed by the MIT license that can be found
 // in the LICENSE file.
 
-import 'dart:async';
-import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
@@ -11,7 +9,6 @@ import 'package:vsem_edu/common/routes.dart';
 import 'package:vsem_edu/globals.dart';
 import 'package:vsem_edu/network/models/profile_response.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
-import 'package:vsem_edu/ui/home/home_models.dart';
 
 class ProfileViewModel extends ChangeNotifier {
   final MainRepository repository;
@@ -20,6 +17,7 @@ class ProfileViewModel extends ChangeNotifier {
   bool get isLoading => _isLoading;
 
   ProfileResponse profile = ProfileResponse("", "", "", "", "", "");
+  String points;
 
   ProfileViewModel({
     @required this.repository
@@ -29,6 +27,7 @@ class ProfileViewModel extends ChangeNotifier {
   void addListener(VoidCallback listener) {
     super.addListener(listener);
     _getProfileInfo();
+    _getPoints();
   }
 
   void _getProfileInfo() {
@@ -42,6 +41,18 @@ class ProfileViewModel extends ChangeNotifier {
           notifyListeners();
     }).catchError((error) {
       _isLoading = false;
+      notifyListeners();
+    });
+  }
+
+  void _getPoints() {
+    notifyListeners();
+
+    repository.getPoints()
+        .then((value) {
+      if(!value.hasError()) points = value.items.length > 0 ? value.items[0].value.toString() : null;
+      notifyListeners();
+    }).catchError((error) {
       notifyListeners();
     });
   }

@@ -48,6 +48,7 @@ class WebService {
   String _getOrdersEndpoint = "api/OrderList";
   String _getAddressesEndpoint = "api/AddressBookList";
   String _saveAddressEndpoint = "api/saveAddressBook";
+  String _getPointsEndpoint = "api/GetPointSummary";
 
   void initClient() {
     _dio = new Dio(); // with default Options
@@ -230,6 +231,19 @@ class WebService {
         queryParameters: params,
         data: address.toJson(),
         options: Options(contentType: "application/x-www-form-urlencoded"));
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getPoints() async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+      "tab": "all",
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getPointsEndpoint,
+        queryParameters: params);
     return WebServiceResponse.fromDioResponse(response);
   }
 }

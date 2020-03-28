@@ -59,7 +59,7 @@ class ProfileView extends StatelessWidget {
                       profileItemWidget("Адреса доставки", onPressed: () {
                         model.onAddressClick(context);
                       }),
-                      profileItemWidget("Баллы", extraText: "1911"),
+                      profileItemWidget("Баллы", extraText: model.points),
                       profileItemWidget("Настройки"),
                       profileItemWidget("Выйти", onPressed: () {
                         model.onExitClick(context);
