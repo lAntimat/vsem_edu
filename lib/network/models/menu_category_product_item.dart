@@ -1,4 +1,9 @@
-import 'package:vsem_edu/network/models/base_response2.dart';
+import 'dart:collection';
+import 'dart:convert';
+
+import 'package:json_annotation/json_annotation.dart';
+
+part 'menu_category_product_item.g.dart';
 
 class MenuCategoryProductItem {
   String itemId;
@@ -6,7 +11,8 @@ class MenuCategoryProductItem {
   String itemName;
   String itemDescription;
   String status;
-  String price;
+  List<String> price;
+  List<String> prices;
   String photo;
   String discount;
   String dish;
@@ -17,16 +23,6 @@ class MenuCategoryProductItem {
       this.itemDescription, this.status, this.price, this.photo, this.discount,
       this.dish, this.dishImage);
 
-  MenuCategoryProductItem.fromJson(Map<String, dynamic> json) {
-    itemId = json['item_id'];
-    merchantId = json['merchant_id'];
-    itemName = json['item_name'];
-    itemDescription = json['item_description'];
-    status = json['status'];
-    price = json['price'];
-    photo = json['photo'];
-    discount = json['discount'];
-    dish = json['dish'];
-    dishImage = json['dish_image'];
-  }
+  factory MenuCategoryProductItem.fromJson(Map<String, dynamic> json) => _$MenuCategoryProductItemFromJson(json);
+  Map<String, dynamic> toJson() => _$MenuCategoryProductItemToJson(this);
 }

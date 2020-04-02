@@ -7,7 +7,9 @@ import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:vsem_edu/common/routes.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
+import 'package:vsem_edu/ui/argumentmodels/MerchantDetailArguments.dart';
 
 import 'home_models.dart';
 import '../../network/models/merchant_models.dart';
@@ -82,5 +84,13 @@ class MainModel extends ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     });
+  }
+
+  void onAllCafesClick(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.merchantList);
+  }
+
+  void onCafeItemClick(BuildContext context, String merchantId, String title) {
+    Navigator.pushNamed(context, AppRoutes.merchantDetail, arguments: MerchantDetailArguments(merchantId, "", title));
   }
 }

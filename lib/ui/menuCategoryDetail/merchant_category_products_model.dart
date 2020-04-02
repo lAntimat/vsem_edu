@@ -20,9 +20,7 @@ class MerchantCategoryProductsModel extends ChangeNotifier {
   String merchantId = "3";
   String categoryId = "3";
 
-  MerchantCategoryProductsModel({
-    @required this.repository
-  });
+  MerchantCategoryProductsModel({@required this.repository});
 
   @override
   void addListener(VoidCallback listener) {
@@ -31,7 +29,6 @@ class MerchantCategoryProductsModel extends ChangeNotifier {
     loadCategoryProducts(merchantId, categoryId);
   }
 
-
   Future loadCategoryProducts(String merchantId, catId) {
     _isLoading = true;
     notifyListeners();
@@ -39,11 +36,15 @@ class MerchantCategoryProductsModel extends ChangeNotifier {
     return repository.getMenuProducts(merchantId, catId).then((_items) {
       items.clear();
       items.addAll(_items);
-      _isLoading = false;
+       _isLoading = false;
       notifyListeners();
     }).catchError((err) {
       _isLoading = false;
       notifyListeners();
     });
+  }
+
+  void onAddToCartClick(MenuCategoryProductItem item) {
+    repository.addToCart(categoryId: categoryId, itemId: item.itemId, twoFlavors: "0", price: item.price[0], notes: "", qty: "1");
   }
 }

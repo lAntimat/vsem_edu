@@ -1,30 +1,29 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'dart:ffi';
 
+import 'package:flutter/material.dart';
 import 'package:vsem_edu/network/models/address.dart';
 import 'package:vsem_edu/network/models/addressRequest.dart';
 import 'package:vsem_edu/network/models/address_parent.dart';
 import 'package:vsem_edu/network/models/base_response.dart';
-import 'package:vsem_edu/network/models/base_response2.dart';
 import 'package:vsem_edu/network/models/create_account_response.dart';
+import 'package:vsem_edu/network/models/create_user_dto.dart';
 import 'package:vsem_edu/network/models/login_response.dart';
 import 'package:vsem_edu/network/models/menu_category_items_parent.dart';
 import 'package:vsem_edu/network/models/menu_category_product_item.dart';
 import 'package:vsem_edu/network/models/menu_category_product_item_parent.dart';
+import 'package:vsem_edu/network/models/merchant_models.dart';
 import 'package:vsem_edu/network/models/order.dart';
 import 'package:vsem_edu/network/models/orders_parent.dart';
 import 'package:vsem_edu/network/models/points_parent.dart';
 import 'package:vsem_edu/network/models/profile_response.dart';
 import 'package:vsem_edu/network/models/restaurant_info_response.dart';
 import 'package:vsem_edu/network/models/simple_response.dart';
-import 'package:vsem_edu/network/models/create_user_dto.dart';
 import 'package:vsem_edu/network/models/verify_phone_response.dart';
 import 'package:vsem_edu/network/web_service.dart';
 import 'package:vsem_edu/ui/home/ImageCarousel.dart';
 import 'package:vsem_edu/ui/home/home_models.dart';
-import 'package:vsem_edu/network/models/merchant_models.dart';
 
 class MainRepository {
   final WebService webService;
@@ -81,9 +80,11 @@ class MainRepository {
     });
   }
 
-  Future<BaseResponse<RestaurantInfoResponse>> getRestaurantInfo(String merchantId) async {
+  Future<BaseResponse<RestaurantInfoResponse>> getRestaurantInfo(
+      String merchantId) async {
     return webService.getRestaurantInfo(merchantId).then((value) {
-      var data = BaseResponse<RestaurantInfoResponse>.fromJson(jsonDecode(value.body));
+      var data =
+          BaseResponse<RestaurantInfoResponse>.fromJson(jsonDecode(value.body));
       data.data = RestaurantInfoResponse.fromJson(data.dataJson);
       return Future.value(data);
     });
@@ -96,7 +97,8 @@ class MainRepository {
     });
   }
 
-  Future<List<MenuCategoryProductItem>> getMenuProducts(String merchantId, String catId) async {
+  Future<List<MenuCategoryProductItem>> getMenuProducts(
+      String merchantId, String catId) async {
     return webService.getMenuProducts(merchantId, catId).then((value) {
       var data = MenuCategoryProductItemParent.fromJson(jsonDecode(value.body));
       return Future.value(data.items);
@@ -105,7 +107,8 @@ class MainRepository {
     });
   }
 
-  Future<List<MenuCategoryProductItem>> getBasket(String merchantId, String catId) async {
+  Future<List<MenuCategoryProductItem>> getBasket(
+      String merchantId, String catId) async {
     return webService.getMenuProducts(merchantId, catId).then((value) {
       var data = MenuCategoryProductItemParent.fromJson(jsonDecode(value.body));
       return Future.value(data.items);
@@ -144,6 +147,27 @@ class MainRepository {
   Future<PointsParent> getPoints() async {
     return webService.getPoints().then((value) {
       var data = PointsParent.fromJson(jsonDecode(value.body));
+      return Future.value(data);
+    });
+  }
+
+  Future<SimpleResponse> addToCart(
+      {@required String categoryId,
+      @required String itemId,
+      @required String twoFlavors,
+      @required String price,
+      @required String notes,
+      @required String qty}) async {
+    return webService
+        .addToCart(
+            categoryId: categoryId,
+            itemId: itemId,
+            twoFlavors: twoFlavors,
+            price: price,
+            notes: notes,
+            qty: qty)
+        .then((value) {
+      var data = SimpleResponse.fromJson(jsonDecode(value.body));
       return Future.value(data);
     });
   }

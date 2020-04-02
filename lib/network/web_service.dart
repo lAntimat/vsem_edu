@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:vsem_edu/common/uuid.dart';
 import 'package:vsem_edu/network/models/addressRequest.dart';
 import 'package:vsem_edu/network/models/create_user_dto.dart';
@@ -70,8 +71,6 @@ class WebService {
         _dio.options.headers = _defaultOptions.headers;
       }
     });
-
-
   }
 
   void addTokenToHeaders(String token) {
@@ -182,7 +181,8 @@ class WebService {
     return WebServiceResponse.fromDioResponse(response);
   }
 
-  Future<WebServiceResponse> getMenuProducts(String merchantId, String catId) async {
+  Future<WebServiceResponse> getMenuProducts(
+      String merchantId, String catId) async {
     Map<String, String> params = Map.from(_defaultParams);
 
     params.addAll({
@@ -244,6 +244,33 @@ class WebService {
 
     var response = await _dio.get(_apiEndpoint + _getPointsEndpoint,
         queryParameters: params);
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> addToCart(
+      {@required String categoryId,
+      @required String itemId,
+      @required String twoFlavors,
+      @required String price,
+      @required String notes,
+      @required String qty}) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+    });
+
+    var response = await _dio.post(_apiEndpoint + _saveAddressEndpoint,
+        queryParameters: params,
+        data: {
+          "category_id": categoryId,
+          "item_id": itemId,
+          "two_flavors": twoFlavors,
+          "price": price,
+          "notes": notes,
+          "qty": qty,
+        },
+        options: Options(contentType: "application/x-www-form-urlencoded"));
     return WebServiceResponse.fromDioResponse(response);
   }
 }

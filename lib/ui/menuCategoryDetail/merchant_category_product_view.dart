@@ -103,9 +103,7 @@ class MerchantCategoryProductView extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            item.price
-                                .replaceAll("[\"", "")
-                                .replaceAll("\"]", ""),
+                            item.price[0],
                             style: TextStyle(
                               fontSize: 16,
                               color: AppColors.orange,
