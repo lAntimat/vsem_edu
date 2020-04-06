@@ -7,6 +7,8 @@ import 'package:vsem_edu/network/models/address.dart';
 import 'package:vsem_edu/network/models/addressRequest.dart';
 import 'package:vsem_edu/network/models/address_parent.dart';
 import 'package:vsem_edu/network/models/base_response.dart';
+import 'package:vsem_edu/network/models/cart/cart.dart';
+import 'package:vsem_edu/network/models/cart/cart_parent.dart';
 import 'package:vsem_edu/network/models/create_account_response.dart';
 import 'package:vsem_edu/network/models/create_user_dto.dart';
 import 'package:vsem_edu/network/models/login_response.dart';
@@ -152,7 +154,8 @@ class MainRepository {
   }
 
   Future<SimpleResponse> addToCart(
-      {@required String categoryId,
+      {@required String merchantId,
+      @required String categoryId,
       @required String itemId,
       @required String twoFlavors,
       @required String price,
@@ -160,6 +163,7 @@ class MainRepository {
       @required String qty}) async {
     return webService
         .addToCart(
+            merchantId: "1",
             categoryId: categoryId,
             itemId: itemId,
             twoFlavors: twoFlavors,
@@ -168,6 +172,13 @@ class MainRepository {
             qty: qty)
         .then((value) {
       var data = SimpleResponse.fromJson(jsonDecode(value.body));
+      return Future.value(data);
+    });
+  }
+
+  Future<CartParent> getCart() async {
+    return webService.getCart("1").then((value) {
+      var data = CartParent.fromJson(jsonDecode(value.body));
       return Future.value(data);
     });
   }

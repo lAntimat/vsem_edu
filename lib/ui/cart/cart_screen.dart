@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' hide Action;
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:vsem_edu/ui/basket/basket_view_model.dart';
+import 'package:vsem_edu/ui/cart/cart_view_model.dart';
 
 class BasketScreen extends StatefulWidget {
   final Widget child;
@@ -24,8 +24,8 @@ class _BasketScreenState extends State<BasketScreen> {
       appBar: AppBar(
         title: Text("Корзина"),
       ),
-      body: ChangeNotifierProvider<BasketViewModel>(
-        create: (context) => GetIt.instance<BasketViewModel>(),
+      body: ChangeNotifierProvider<CartViewModel>(
+        create: (context) => GetIt.instance<CartViewModel>(),
         child: widget.child,
       ),
     );

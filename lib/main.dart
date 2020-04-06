@@ -9,6 +9,7 @@ import 'globals.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Globals.getInstance().init();
   await Globals.getInstance().getToken();
   WebService _webService = WebService.getInstance();
   _webService.initClient();

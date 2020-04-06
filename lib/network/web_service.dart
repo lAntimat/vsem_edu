@@ -25,7 +25,7 @@ class WebService {
   Map<String, String> _defaultParams = {
     "device_id": "deviceId",
     "device_platform": "mobile",
-    "device_uiid": Uuid().generateV4(),
+    "device_uiid": Globals.getInstance().uuid,
     "api_key": "apikeydeliverycube",
     "lang": "ru"
   };
@@ -50,6 +50,8 @@ class WebService {
   String _getAddressesEndpoint = "api/AddressBookList";
   String _saveAddressEndpoint = "api/saveAddressBook";
   String _getPointsEndpoint = "api/GetPointSummary";
+  String _addToCartEndpoint = "api/addToCart";
+  String _getCartEndpoint = "api/loadCart";
 
   void initClient() {
     _dio = new Dio(); // with default Options
@@ -248,7 +250,8 @@ class WebService {
   }
 
   Future<WebServiceResponse> addToCart(
-      {@required String categoryId,
+      {@required String merchantId,
+      @required String categoryId,
       @required String itemId,
       @required String twoFlavors,
       @required String price,
@@ -258,9 +261,10 @@ class WebService {
 
     params.addAll({
       "user_token": Globals.getInstance().token,
+      "merchant_id": merchantId
     });
 
-    var response = await _dio.post(_apiEndpoint + _saveAddressEndpoint,
+    var response = await _dio.post(_apiEndpoint + _addToCartEndpoint,
         queryParameters: params,
         data: {
           "category_id": categoryId,
@@ -271,6 +275,19 @@ class WebService {
           "qty": qty,
         },
         options: Options(contentType: "application/x-www-form-urlencoded"));
+    return WebServiceResponse.fromDioResponse(response);
+  }
+
+  Future<WebServiceResponse> getCart(String merchantId) async {
+    Map<String, String> params = Map.from(_defaultParams);
+
+    params.addAll({
+      "user_token": Globals.getInstance().token,
+      "merchant_id": merchantId,
+    });
+
+    var response = await _dio.get(_apiEndpoint + _getCartEndpoint,
+        queryParameters: params);
     return WebServiceResponse.fromDioResponse(response);
   }
 }

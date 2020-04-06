@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
 import 'package:vsem_edu/network/models/menu_category_product_item.dart';
 import 'package:vsem_edu/repository/main_repository.dart';
@@ -45,6 +46,11 @@ class MerchantCategoryProductsModel extends ChangeNotifier {
   }
 
   void onAddToCartClick(MenuCategoryProductItem item) {
-    repository.addToCart(categoryId: categoryId, itemId: item.itemId, twoFlavors: "0", price: item.price[0], notes: "", qty: "1");
+    repository.addToCart(merchantId: merchantId, categoryId: categoryId, itemId: item.itemId, twoFlavors: "0", price: item.price[0], notes: "", qty: "1")
+    .then((value) {
+      Fluttertoast.showToast(msg: "Успешно добавлено в корзину!");
+    }).catchError((error) {
+      Fluttertoast.showToast(msg: "Ошибка: $error");
+    });
   }
 }

@@ -14,9 +14,9 @@ import 'package:vsem_edu/ui/address/add_address_view.dart';
 import 'package:vsem_edu/ui/address/address_screen.dart';
 import 'package:vsem_edu/ui/address/address_view.dart';
 import 'package:vsem_edu/ui/address/address_view_model.dart';
-import 'package:vsem_edu/ui/basket/basket_screen.dart';
-import 'package:vsem_edu/ui/basket/basket_view.dart';
-import 'package:vsem_edu/ui/basket/basket_view_model.dart';
+import 'package:vsem_edu/ui/cart/cart_screen.dart';
+import 'package:vsem_edu/ui/cart/cart_view.dart';
+import 'package:vsem_edu/ui/cart/cart_view_model.dart';
 import 'package:vsem_edu/ui/home/base_screen.dart';
 import 'package:vsem_edu/ui/home/main_model.dart';
 import 'package:vsem_edu/ui/home/main_view.dart';
@@ -63,7 +63,7 @@ class ProviderApp extends StatelessWidget {
     GetIt.instance.registerFactory<LoginViewModel>(() => LoginViewModel(repository: repository));
     GetIt.instance.registerFactory<RegisterViewModel>(() => RegisterViewModel(repository: repository));
     GetIt.instance.registerFactory<ProfileViewModel>(() => ProfileViewModel(repository: repository));
-    GetIt.instance.registerFactory<BasketViewModel>(() => BasketViewModel(repository: repository));
+    GetIt.instance.registerFactory<CartViewModel>(() => CartViewModel(repository: repository));
     GetIt.instance.registerFactory<CodeViewModel>(() => CodeViewModel(repository: repository));
     GetIt.instance.registerFactory<MerchantDetailModel>(() => MerchantDetailModel(repository: repository));
     GetIt.instance.registerFactory<MerchantCategoryProductsModel>(() => MerchantCategoryProductsModel(repository: repository));
@@ -81,7 +81,7 @@ class ProviderApp extends StatelessWidget {
         AppRoutes.login: (context) => LoginScreen(LoginView()),
         AppRoutes.auth: (context) => RegisterScreen(RegisterView()),
         AppRoutes.profile: (context) => ProfileScreen(ProfileView()),
-        AppRoutes.basket: (context) => BasketScreen(BasketView()),
+        AppRoutes.basket: (context) => BasketScreen(CartView()),
         AppRoutes.code: (context) => CodeScreen(CodeView()),
         AppRoutes.merchantDetail: (context) => MerchantDetailScreen(MerchantDetailView()),
         AppRoutes.merchantCategoryProducts: (context) => MerchantCategoryProductScreen(MerchantCategoryProductView()),

@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:vsem_edu/common/app_colors.dart';
 
 class ItemPicker extends StatefulWidget {
-  int i = 0;
+  int count = 0;
+
+
+  ItemPicker({this.count});
 
   @override
   _ItemPickerState createState() => _ItemPickerState();
@@ -19,7 +22,7 @@ class _ItemPickerState extends State<ItemPicker> {
             icon: Icon(Icons.remove),
             onPressed: () {
               setState(() {
-                if (widget.i > 0) widget.i--;
+                if (widget.count > 0) widget.count--;
               });
             }),
         Container(
@@ -34,14 +37,14 @@ class _ItemPickerState extends State<ItemPicker> {
             child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  widget.i.toString(),
+                  widget.count.toString(),
                   style: TextStyle(fontSize: 18, color: AppColors.blackText),
                 ))),
         btn(
             icon: Icon(Icons.add),
             onPressed: () {
               setState(() {
-                widget.i++;
+                widget.count++;
               });
             }),
       ],

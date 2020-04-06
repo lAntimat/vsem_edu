@@ -41,14 +41,20 @@ class MerchantCategoryProductView extends StatelessWidget {
           model.items.length,
           (index) {
             var item = model.items[index];
-            return listTile(item, () {});
+            return listTile(item, callback: () {
+              showDialog(
+                  context: context,
+                  child: _getDialog(context, () {
+                    model.onAddToCartClick(item);
+                  }));
+            });
           },
         ),
       ),
     );
   }
 
-  Widget listTile(MenuCategoryProductItem item, VoidCallback callback) {
+  Widget listTile(MenuCategoryProductItem item, {VoidCallback callback}) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: GestureDetector(
@@ -135,6 +141,27 @@ class MerchantCategoryProductView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _getDialog(BuildContext context, VoidCallback callback) {
+    return AlertDialog(
+      title: Text("Добавить в корзину?", style: TextStyle(color: AppColors.white, fontSize: 18),),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('Нет'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: const Text('Добавить'),
+          onPressed: () {
+            callback();
+            Navigator.of(context).pop();
+          },
+        )
+      ],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vsem_edu/common/uuid.dart';
 
 import 'network/web_service.dart';
 
@@ -14,36 +15,56 @@ class Globals {
   }
 
   String token = "";
+  String uuid = "";
   String globalUserId = "";
-  static const String tokenKey = "token";
-  static const String userIdKey = "userId";
+  static const String _tokenKey = "token";
+  static const String _uuidKey = "uuid";
+  static const String _userIdKey = "userId";
 
-  void init() async {
+  Future<void> init() async {
     token = await getToken();
+    uuid = await getUuid();
   }
 
   Future<void> saveToken(String _token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = _token;
     WebService.getInstance().addTokenToHeaders(token);
-    await prefs.setString(tokenKey, _token);
+    await prefs.setString(_tokenKey, _token);
   }
 
   Future<void> saveUserId(String _userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     globalUserId = _userId;
-    await prefs.setString(userIdKey, _userId);
+    await prefs.setString(_userIdKey, _userId);
   }
 
   Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    token = prefs.getString(tokenKey) ?? "";
+    token = prefs.getString(_tokenKey) ?? "";
     return token;
+  }
+
+  Future<String> getUuid() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uuid = prefs.getString(_uuidKey) ?? "";
+
+    if(uuid.isEmpty) {
+      uuid = await saveUuid(Uuid().generateV4());
+    }
+
+    return uuid;
+  }
+
+  Future<String> saveUuid(String _uuid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_uuidKey, _uuid);
+    return uuid;
   }
 
   Future<String> getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    globalUserId = prefs.getString(userIdKey) ?? "";
+    globalUserId = prefs.getString(_userIdKey) ?? "";
     return globalUserId;
   }
 
