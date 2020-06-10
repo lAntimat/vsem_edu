@@ -33,7 +33,7 @@ class WebService {
   Options _defaultOptions;
   Dio _dio;
 
-  String _apiEndpoint = "https://cheglok.ru/mobileappv2/";
+  String _apiEndpoint = "https://vipdostavka15.ru/mobileappv2/";
 
   // NOTE: Add or remove endpoints required
   String _getCuisinesEndpoint = "api/cuisineList";
